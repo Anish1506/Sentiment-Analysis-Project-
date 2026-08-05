@@ -92,40 +92,6 @@ Combining these diverse models through voting helps reduce individual model bias
 | Text vectorization | Tokenizer, Count Vectorizer |
 | Language | Python |
 
-## Project Structure
-
-```
-├── data/                   # Raw and processed tweet data
-├── preprocessing/          # Text cleaning and preprocessing scripts
-├── channel1_bert/          # BERT preprocessing, embedding, and classification
-├── channel2_cnn_bilstm/    # Tokenizer, padding, GloVe embedding, CNN, BiLSTM
-├── channel3_svm/           # Count vectorizer and SVM model
-├── ensemble/                # Voting logic combining all channel predictions
-├── notebooks/               # Experiments and evaluation notebooks
-├── requirements.txt
-└── README.md
-```
-
-## Getting Started
-
-### Prerequisites
-```bash
-pip install -r requirements.txt
-```
-
-### Usage
-```bash
-# 1. Preprocess raw tweets
-python preprocessing/preprocess.py --input data/raw_tweets.csv --output data/clean_tweets.csv
-
-# 2. Train / run each channel
-python channel1_bert/run_bert.py
-python channel2_cnn_bilstm/run_cnn_bilstm.py
-python channel3_svm/run_svm.py
-
-# 3. Combine predictions via voting
-python ensemble/vote.py --output predictions.csv
-```
 
 ## Results
 
@@ -143,7 +109,3 @@ python ensemble/vote.py --output predictions.csv
 - Experiment with weighted voting instead of majority voting.
 - Add more sentiment classes (e.g., Neutral).
 - Deploy as a REST API for real-time tweet sentiment scoring.
-
-## License
-
-Add your preferred license here (e.g., MIT).
