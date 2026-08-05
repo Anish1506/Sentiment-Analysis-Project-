@@ -103,3 +103,7 @@ The project includes a Streamlit-based graphical interface where users can:
 - Model optimization
 - Cross-domain adaptation
 - Lightweight deployment for edge devices
+
+## License
+
+This project is developed for academic and research purposes.
