@@ -1,111 +1,107 @@
-# Twitter Sentiment Analysis using an Ensemble of BERT, CNN-BiLSTM, and SVM
+# Twitter Sentiment Analysis using Ensemble of Machine Learning and Deep Learning Models
 
-This project predicts the sentiment (**Positive** / **Negative**) of tweets using an ensemble (voting-based) architecture that combines three independent classification pipelines: a **BERT-based transformer channel**, a **CNN-BiLSTM deep learning channel**, and a **classical SVM channel**. The final prediction is produced through a **voting mechanism** that aggregates the outputs of all three channels.
+An ensemble-based Twitter Sentiment Analysis system that combines **BERT+CNN+BiLSTM**, **GloVe+CNN+BiLSTM**, and **Support Vector Machine (SVM)** to classify tweets into **Positive**, **Neutral**, and **Negative** sentiments. The ensemble model leverages the strengths of both traditional machine learning and deep learning to achieve improved classification performance.
 
-## Overview
+## 📌 Overview
 
-Raw tweets are first cleaned through a common preprocessing step, after which the pipeline branches into three parallel channels. Each channel independently learns to classify sentiment using a different representation and modeling strategy. Their individual predictions are combined at a voting stage to produce the final sentiment label.
+Social media platforms generate massive amounts of textual data that reflect public opinions. This project analyzes COVID-19-related Twitter posts using an ensemble learning approach to improve sentiment classification accuracy.
 
-## Architecture
+The proposed system integrates predictions from three different models using an ensemble voting strategy to produce robust sentiment predictions.
 
-The diagram below summarizes the end-to-end pipeline:
+## 🚀 Features
 
-```
-Tweets for Review
-      │
-      ▼
- Preprocessing
-      │
-   ┌──┴────────────────┬─────────────────────┐
-   ▼                   ▼                     ▼
-Channel 1           Channel 2             Channel 3
-(BERT)          (CNN + BiLSTM)              (SVM)
-   │                   │                     │
-   ▼                   ▼                     ▼
-BERT               Tokenizer            Count Vectorizer
-Preprocessor            │                     │
-   │                 Padding                  ▼
-   ▼                   │                     SVM
-Embedding          Vectorization               │
-   │                   │                       │
-Transformer         GloVe Embedding             │
-Encoder                 │                       │
-   │              ┌─────┴─────┐                 │
-Classification +   ▼           ▼                │
-GELU + Norm       CNN        BiLSTM             │
-   │           (Conv Layer  (stacked            │
-Final Embedding  + Maxpool)   LSTM layers)       │
-Outcome              │           │               │
-   │                 └─────┬─────┘               │
-   └──────────────────┐    │    ┌────────────────┘
-                       ▼    ▼    ▼
-                        Voting
-                          │
-                 ┌────────┴────────┐
-                 ▼                 ▼
-             Positive           Negative
-```
+- Text preprocessing and cleaning
+- BERT-based contextual embeddings
+- GloVe word embeddings
+- CNN + BiLSTM hybrid architecture
+- SVM classifier with Count Vectorization
+- Ensemble prediction using voting
+- Interactive Streamlit GUI
+- Real-time sentiment prediction
+- Confidence score visualization
 
-### 1. Preprocessing
-Raw tweets are cleaned (e.g., noise removal, normalization) before being fed into the three channels.
+## 🏗️ Model Architecture
 
-### 2. Channel 1 — BERT
-- **BERT Preprocessor** tokenizes and formats text for BERT.
-- **Embedding** layer generates contextual token embeddings.
-- **Transformer Encoder** captures contextual/semantic relationships across the sequence.
-- **Classification + GELU + Norm** applies a classification head with GELU activation and normalization.
-- **Final Embedding Outcome** is passed forward as the output of the BERT channel, and also feeds into the CNN-BiLSTM channel.
+### Model 1
+- BERT
+- CNN
+- BiLSTM
 
-### 3. Channel 2 — CNN + BiLSTM (hybrid deep learning channel)
-- **Tokenizer** converts text into token sequences.
-- **Padding** standardizes sequence lengths.
-- **Vectorization** converts tokens into numerical form.
-- **GloVe Embedding** maps tokens to pre-trained GloVe word vectors.
-- The embedded sequence (combined with the BERT channel's output) is passed to:
-  - **CNN** — a convolutional layer followed by max-pooling to extract local n-gram / feature patterns from the embeddings.
-  - **BiLSTM** — stacked bidirectional LSTM layers that model sequential/contextual dependencies in both directions.
-- The CNN and BiLSTM outputs feed into the voting stage.
+### Model 2
+- GloVe Embeddings
+- CNN
+- BiLSTM
 
-### 4. Channel 3 — SVM (classical ML channel)
-- **Count Vectorizer** converts tweets into a bag-of-words / term-frequency representation.
-- **SVM (Support Vector Machine)** classifies the vectorized text.
+### Model 3
+- Support Vector Machine (SVM)
+- Count Vectorizer
 
-### 5. Voting (Ensemble)
-Predictions from the BERT channel, the CNN-BiLSTM channel, and the SVM channel are combined using a **voting** strategy to produce the final sentiment label: **Positive** or **Negative**.
+### Ensemble
 
-## Why an Ensemble?
+The outputs of all three models are combined using a voting mechanism to generate the final sentiment prediction.
 
-- **BERT** captures deep contextual and semantic meaning from language.
-- **CNN-BiLSTM** captures local n-gram patterns (via CNN) and long-range sequential dependencies in both directions (via BiLSTM).
-- **SVM** provides a strong, lightweight classical baseline using sparse text representations.
+## 🛠️ Tech Stack
 
-Combining these diverse models through voting helps reduce individual model bias/variance and generally improves robustness and accuracy over any single model.
+- Python
+- PyTorch
+- Transformers (Hugging Face)
+- Scikit-learn
+- cuML (GPU SVM)
+- Pandas
+- NumPy
+- NLTK
+- Streamlit
+- Matplotlib
 
-## Tech Stack
+## 📂 Dataset
 
-| Component | Tool / Library |
-|---|---|
-| Transformer model | BERT (Hugging Face Transformers) |
-| Word embeddings | GloVe |
-| Deep learning | CNN, BiLSTM (TensorFlow / Keras or PyTorch) |
-| Classical ML | SVM (scikit-learn) |
-| Text vectorization | Tokenizer, Count Vectorizer |
-| Language | Python |
+COVID-19 Twitter Dataset
 
+Dataset contains COVID-19 related tweets categorized into:
 
-## Results
+- Positive
+- Neutral
+- Negative
 
-*(Add your accuracy, precision, recall, F1-score, and confusion matrix here once available.)*
+## ⚙️ Preprocessing
 
-| Model | Accuracy | F1-Score |
-|---|---|---|
-| BERT | — | — |
-| CNN-BiLSTM | — | — |
-| SVM | — | — |
-| **Ensemble (Voting)** | — | — |
+The following preprocessing steps are applied:
 
-## Future Work
+- Lowercase conversion
+- HTML tag removal
+- Punctuation removal
+- Number removal
+- Stopword removal
+- Multiple space removal
+- Single character removal
+- Tokenization
 
-- Experiment with weighted voting instead of majority voting.
-- Add more sentiment classes (e.g., Neutral).
-- Deploy as a REST API for real-time tweet sentiment scoring.
+## 📈 Results
+
+| Model | Accuracy |
+|--------|----------|
+| BERT + CNN + BiLSTM | **92.55%** |
+| GloVe + CNN + BiLSTM | **94.22%** |
+| SVM | **87.23%** |
+| **Ensemble Model** | **94.95%** |
+
+The ensemble model achieved the highest accuracy by combining predictions from all three models.
+
+## 💻 GUI
+
+The project includes a Streamlit-based graphical interface where users can:
+
+- Enter custom text
+- Predict sentiment
+- View confidence scores
+- Analyze sample tweets
+
+## 📊 Future Improvements
+
+- Multilingual sentiment analysis
+- Explainable AI (XAI)
+- Dynamic ensemble weighting
+- Real-time Twitter streaming
+- Model optimization
+- Cross-domain adaptation
+- Lightweight deployment for edge devices
