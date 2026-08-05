@@ -55,9 +55,7 @@ The outputs of all three models are combined using a voting mechanism to generat
 
 ## 📂 Dataset
 
-COVID-19 Twitter Dataset
-
-Dataset contains COVID-19 related tweets categorized into:
+The COVID-19 Twitter Dataset contains comprising 143,903 COVID-19 related tweets. For experimentation, 115,123 tweets were used for training, and 28,780 were reserved for testing the proposed models. tweets categorized into:
 
 - Positive
 - Neutral
